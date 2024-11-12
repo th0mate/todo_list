@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import {ref, computed} from 'vue';
+import type { Ref } from 'vue';
 
 const nouvelleTache = ref('');
 const cacheFaits = ref(false);
 let id = 0;
 const tachesFiltrees = computed(filtrerTaches);
 
-const taches = ref([
+const taches:Ref<Tache[]> = ref([
   {id: id++, description: "Apprendre Vue", faite: true},
   {id: id++, description: "Finir la SAÉ", faite: false},
   {id: id++, description: "Réviser pour l'interro", faite: false}
@@ -49,10 +50,10 @@ function filtrerTaches() {
   <div id="wrapper">
     <ul>
       <li v-for="tache in tachesFiltrees" :key="tache.id">
-        <label :for="tache.id" :class="{fait : tache.faite}"><input type="checkbox" :id=tache.id v-model="tache.faite">{{
+        <label :for="tache.id.toString()" :class="{fait : tache.faite}"><input type="checkbox" :id=tache.id.toString() v-model="tache.faite">{{
             tache.description
           }}</label>
-        <button @click="retirerTache()">Retirer</button>
+        <button @click="retirerTache(tache)">Retirer</button>
       </li>
     </ul>
   </div>
