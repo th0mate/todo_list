@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import {ref, computed} from 'vue';
-import type { Ref } from 'vue';
+import type {Ref} from 'vue';
+import TacheElement from '@/composants/TacheElement.vue';
 
-const props = defineProps<{titre: string}>();
+const emit = defineEmits<{supprimerListe:[]}>();
+
+const props = defineProps<{ titre: string }>();
 
 const nouvelleTache = ref('');
 const cacheFaits = ref(false);
 let id = 0;
 const tachesFiltrees = computed(filtrerTaches);
 
-const taches:Ref<Tache[]> = ref([
+const taches: Ref<Tache[]> = ref([
   {id: id++, description: "Apprendre Vue", faite: true},
   {id: id++, description: "Finir la SAÉ", faite: false},
   {id: id++, description: "Réviser pour l'interro", faite: false}
@@ -35,7 +38,7 @@ interface Tache {
   faite: boolean;
 }
 
-function retirerTache(tache:Tache) {
+function retirerTache(tache: Tache) {
   const index = taches.value.indexOf(tache);
   taches.value.splice(index, 1);
 }
@@ -49,15 +52,13 @@ function filtrerTaches() {
 <template>
 
   <div id="wrapper">
+    <button @click="emit('supprimerListe')">x</button>
     <h2>{{ props.titre }}</h2>
     <input type="text" placeholder="Ajouter une tâche" v-model.trim="nouvelleTache">
     <button @click="ajouterTache">Ajouter</button>
     <ul>
       <li v-for="tache in tachesFiltrees" :key="tache.id">
-        <label :for="tache.id.toString()" :class="{fait : tache.faite}"><input type="checkbox" :id=tache.id.toString() v-model="tache.faite">{{
-            tache.description
-          }}</label>
-        <button @click="retirerTache(tache)">Retirer</button>
+        <TacheElement :description-tache="tache.description" :cochee="tache.faite" @supprimerTache="retirerTache(tache)"/>
       </li>
     </ul>
 

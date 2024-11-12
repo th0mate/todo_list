@@ -22,6 +22,16 @@ function ajouterListe() {
   nouvelleTache.value = '';
 }
 
+interface Liste {
+  id: number;
+  titre: string;
+}
+
+function retirerListe(liste:Liste) {
+  const index = todoList.value.indexOf(liste);
+  todoList.value.splice(index, 1);
+}
+
 </script>
 
 <template>
@@ -33,7 +43,7 @@ function ajouterListe() {
   <br>
 
   <div v-for="todo in todoList" :key="todo.id">
-    <ListeDeTaches :titre="todo.titre"/>
+    <ListeDeTaches :titre="todo.titre" @supprimerListe="retirerListe(liste)"/>
     <br>
   </div>
 </template>
