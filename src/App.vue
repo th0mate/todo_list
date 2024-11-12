@@ -26,7 +26,13 @@ function ajouterTache() {
   nouvelleTache.value = '';
 }
 
-function retirerTache(tache) {
+interface Tache {
+  id: number;
+  description: string;
+  faite: boolean;
+}
+
+function retirerTache(tache:Tache) {
   const index = taches.value.indexOf(tache);
   taches.value.splice(index, 1);
 }
@@ -46,7 +52,7 @@ function filtrerTaches() {
         <label :for="tache.id" :class="{fait : tache.faite}"><input type="checkbox" :id=tache.id v-model="tache.faite">{{
             tache.description
           }}</label>
-        <button @click="retirerTache(tache)">Retirer</button>
+        <button @click="retirerTache()">Retirer</button>
       </li>
     </ul>
   </div>
