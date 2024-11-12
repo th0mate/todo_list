@@ -2,6 +2,7 @@
 import {ref} from 'vue';
 
 const nouvelleTache = ref('');
+const cacheFaits = ref(false);
 let id = 0;
 const taches = ref([
   {id: id++, description: "Apprendre Vue", faite: true},
@@ -28,6 +29,10 @@ function retirerTache(tache) {
   taches.value.splice(index, 1);
 }
 
+function filtrerTaches() {
+  return cacheFaits.value ? taches.value.filter(tache => !tache.faite) : taches.value;
+}
+
 </script>
 
 <template>
@@ -35,12 +40,16 @@ function retirerTache(tache) {
   <button @click="ajouterTache">Ajouter</button>
   <div id="wrapper">
     <ul>
-      <li v-for="tache in taches" :key="tache.id">
+      <li v-for="tache in filtrerTaches()" :key="tache.id">
         <label :for="tache.id" :class="{fait : tache.faite}"><input type="checkbox" :id=tache.id v-model="tache.faite">{{ tache.description }}</label>
         <button @click="retirerTache(tache)">Retirer</button>
       </li>
     </ul>
   </div>
+
+  <button @click="cacheFaits = !cacheFaits">
+    {{ cacheFaits ? 'Tout montrer' : 'Cacher les tâches terminées' }}
+  </button>
 </template>
 
 <style scoped>
