@@ -58,11 +58,9 @@ function filtrerTaches() {
     <button @click="ajouterTache">Ajouter</button>
     <ul>
       <li v-for="tache in tachesFiltrees" :key="tache.id">
-        <TacheElement
-          :description-tache="tache.description"
-          v-model="tache.faite"
-          @supprimer-tache="retirerTache(tache)"
-        />
+        <TacheElement v-model="tache.faite" @supprimerTache="retirerTache(tache)">
+          <span>{{tache.description}}</span>
+        </TacheElement>
       </li>
     </ul>
 

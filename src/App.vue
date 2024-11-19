@@ -43,7 +43,7 @@ function retirerListe(liste:Liste) {
   <br>
 
   <div v-for="todo in todoList" :key="todo.id">
-    <ListeDeTaches :titre="todo.titre" @supprimerListe="retirerListe(liste)"/>
+    <ListeDeTaches :titre="todo.titre" @supprimerListe="retirerListe(todo)"/>
     <br>
   </div>
 </template>

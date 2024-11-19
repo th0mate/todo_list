@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import {ref} from 'vue';
 
-const props = defineProps<{ descriptionTache: string, modelValue: boolean }>();
+const props = defineProps<{ modelValue: boolean }>();
 const emit = defineEmits<{
   supprimerTache: [],
   "update:modelValue": [boolean]
@@ -10,9 +9,9 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <input type="checkbox" @change="$emit('changerTacheFaite', ($event.target as HTMLInputElement).checked)"
+  <input type="checkbox" @change="$emit('update:modelValue', ($event.target as HTMLInputElement).checked)"
          :checked="props.modelValue">
-  <span :class="{fait: props.modelValue}">{{ props.descriptionTache }}</span>
+  <span :class="{fait: props.modelValue}"><slot></slot></span>
   <button @click="emit('supprimerTache')">Retirer</button>
 </template>
 
