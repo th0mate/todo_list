@@ -3,7 +3,7 @@ import {ref, computed} from 'vue';
 import type {Ref} from 'vue';
 import TacheElement from '@/composants/TacheElement.vue';
 
-const emit = defineEmits<{supprimerListe:[]}>();
+const emit = defineEmits<{ supprimerListe: [] }>();
 
 const props = defineProps<{ titre: string }>();
 
@@ -58,7 +58,11 @@ function filtrerTaches() {
     <button @click="ajouterTache">Ajouter</button>
     <ul>
       <li v-for="tache in tachesFiltrees" :key="tache.id">
-        <TacheElement :description-tache="tache.description" :cochee="tache.faite" @supprimerTache="retirerTache(tache)" @changerTacheFaite="(v) => tache.faite=v"/>
+        <TacheElement
+          :description-tache="tache.description"
+          v-model="tache.faite"
+          @supprimer-tache="retirerTache(tache)"
+        />
       </li>
     </ul>
 
